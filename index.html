@@ -1,40 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Stock List</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MLACP — Stock List</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="site-header">
-  <div class="container header-inner">
+  <header>
     <h1>MLACP — Stock List</h1>
-    <div class="header-actions">
-      <a href="add.html" class="btn primary">+ Add Product</a>
-    </div>
-  </div>
-</header>
+    <a href="add.html" class="add-link">+ Add Product</a>
+  </header>
 
-<main class="container">
-  <div class="card">
-    <div class="search-bar">
-      <input id="searchInput" type="search" placeholder="Search by name or ID…" aria-label="Search products" />
+  <main>
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search by name or ID...">
     </div>
-    <div id="listInfo" class="muted"></div>
-    <div id="productsGrid" class="grid"></div>
-    <div id="emptyState" class="empty hidden">
-      <p>No products found.</p>
-    </div>
-  </div>
-</main>
 
-<footer class="site-footer">
-  <div class="container">
-    <p>© MLACP Stock Management</p>
-  </div>
-</footer>
+    <div id="productList" class="product-list"></div>
+    <p id="noResults" class="hidden">No products found.</p>
+  </main>
 
-<script src="script.js"></script>
+  <footer>
+    <p>© MLACP Stock Manager</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
