@@ -1,8 +1,8 @@
 // ==========================
 // CONFIG: GitHub Pages Base URL
 // ==========================
-// Replace "inventory-app" with your repo name if you called it differently
-const BASE_URL = "https://noahtollysmells.github.io/inventory-app";
+// Your real deployed repo URL
+const BASE_URL = "https://noahtollysmells.github.io/MLACPSTOCKMANAGEMENT";
 
 // ==========================
 // PRODUCT STORAGE
@@ -80,9 +80,10 @@ function showDetail(id) {
     <div id="qrcode"></div>
     <button onclick="downloadQR('${id}')">Download QR</button>
     <button onclick="window.print()">Print Label</button>
+    <button onclick="backToList()">Back to List</button>
   `;
 
-  // Generate QR Code that points to GitHub Pages URL
+  // Generate QR Code pointing to GitHub Pages product link
   const url = `${BASE_URL}#/product/${id}`;
   new QRCode(document.getElementById("qrcode"), {
     text: url,
@@ -104,6 +105,15 @@ function downloadQR(id) {
   link.download = `product_${id}_qr.png`;
   link.href = canvas.toDataURL();
   link.click();
+}
+
+// ==========================
+// BACK TO LIST
+// ==========================
+function backToList() {
+  window.location.hash = "";
+  document.getElementById("productDetail").innerHTML = "";
+  renderList();
 }
 
 // ==========================
