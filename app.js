@@ -1,30 +1,18 @@
-// ==========================
-// FIREBASE INIT
-// ==========================
-const firebaseConfig = {
-  apiKey: "AIzaSyDlZMxDROLU7zZ0q1CVGEo1G0oEVgPoaxI",
-  authDomain: "mlacpstock.firebaseapp.com",
-  projectId: "mlacpstock",
-  storageBucket: "mlacpstock.firebasestorage.app",
-  messagingSenderId: "61596447406",
-  appId: "1:61596447406:web:cc73799a3a650adcf5333f",
-  measurementId: "G-P7KFVSBDXC"
-};
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQRy4oNHqb6IGGRq87BVHs5GD69suWg9nX89R8W6rfMV8IfgZrZ8PImes-MX2_JkgYtcGJmH45M8V-M/pub?output=csv";
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-// ==========================
-// FETCH PRODUCTS
-// ==========================
+// Fetch and parse CSV
 async function fetchProducts() {
-  const snapshot = await db.collection("products").get();
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  const res = await fetch(SHEET_URL);
+  const text = await res.text();
+  const rows = text.split("\n").map(r => r.split(","));
+  const headers = rows.shift();
+  return rows.map(r => {
+    let obj = {};
+    headers.forEach((h, i) => obj[h.trim()] = r[i]?.trim());
+    return obj;
+  });
 }
 
-// ==========================
-// RENDER LIST
-// ==========================
 async function renderList() {
   const list = document.getElementById("productList");
   const detail = document.getElementById("productDetail");
@@ -32,7 +20,6 @@ async function renderList() {
   detail.classList.add("hidden");
 
   const products = await fetchProducts();
-
   products.forEach((p) => {
     const card = document.createElement("div");
     card.className = "product-card";
@@ -45,9 +32,6 @@ async function renderList() {
   });
 }
 
-// ==========================
-// SHOW PRODUCT DETAIL
-// ==========================
 async function showDetail(id) {
   const products = await fetchProducts();
   const product = products.find(p => p.id === id);
@@ -62,8 +46,6 @@ async function showDetail(id) {
     <p><strong>Price:</strong> £${product.price}</p>
     <div id="qrcode"></div>
     <button onclick="downloadQR('${id}')">Download QR</button>
-    <button onclick="window.print()">Print Label</button>
-    <button onclick="deleteProduct('${id}')">Delete</button>
     <button onclick="backToList()">Back</button>
   `;
 
@@ -77,61 +59,22 @@ async function showDetail(id) {
   window.location.hash = "/product/" + id;
 }
 
-// ==========================
-// ADD PRODUCT
-// ==========================
-async function addProduct() {
-  const name = prompt("Enter product name:");
-  const specs = prompt("Enter product specs:");
-  const price = prompt("Enter product price:");
-
-  if (!name || !specs || !price) return;
-
-  await db.collection("products").add({ name, specs, price });
-  renderList();
-}
-
-// ==========================
-// DELETE PRODUCT
-// ==========================
-async function deleteProduct(id) {
-  if (confirm("Delete this product?")) {
-    await db.collection("products").doc(id).delete();
-    backToList();
-    renderList();
-  }
-}
-
-// ==========================
-// DOWNLOAD QR
-// ==========================
 function downloadQR(id) {
   const canvas = document.querySelector("#qrcode canvas");
   if (!canvas) return;
-
   const link = document.createElement("a");
   link.download = `product_${id}_qr.png`;
   link.href = canvas.toDataURL();
   link.click();
 }
 
-// ==========================
-// BACK TO LIST
-// ==========================
 function backToList() {
   window.location.hash = "";
   document.getElementById("productDetail").classList.add("hidden");
 }
 
-// ==========================
-// ROUTER
-// ==========================
 window.addEventListener("load", async () => {
   renderList();
-
-  document.getElementById("addBtn").addEventListener("click", addProduct);
-
-  // If URL has a product hash, open detail
   const hash = window.location.hash;
   if (hash.startsWith("#/product/")) {
     const id = hash.split("/")[2];
