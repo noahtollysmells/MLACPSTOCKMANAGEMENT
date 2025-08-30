@@ -1,4 +1,5 @@
 const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQRy4oNHqb6IGGRq87BVHs5GD69suWg9nX89R8W6rfMV8IfgZrZ8PImes-MX2_JkgYtcGJmH45M8V-M/pub?output=csv";
+const deleteUrl = "https://script.google.com/macros/s/AKfycbxa5fJBCcLuDdZpu1YZ1212zANMLmVYTp4z69R1pZ9D4stGkjcskDGBj4HZ0se7kdzg/exec";
 
 // Get product ID from URL
 const urlParams = new URLSearchParams(window.location.search);
@@ -39,6 +40,21 @@ async function loadProduct() {
       text: window.location.href,
       width: 128,
       height: 128
+    });
+
+    // Attach delete button handler
+    document.getElementById("delete-btn").addEventListener("click", async () => {
+      if (!confirm("Are you sure you want to delete this product?")) return;
+
+      try {
+        const res = await fetch(`${deleteUrl}?id=${product.id}`, { method: "POST" });
+        const text = await res.text();
+        alert(text);
+        window.location.href = "index.html"; // go back after delete
+      } catch (err) {
+        alert("Error deleting product.");
+        console.error(err);
+      }
     });
 
   } catch (err) {
