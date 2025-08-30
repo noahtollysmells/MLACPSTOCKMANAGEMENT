@@ -1,51 +1,103 @@
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
-  background: #f7f7f7;
-  color: #333;
+  font-family: "Segoe UI", sans-serif;
+  background: #121212;
+  color: #f1f1f1;
 }
 
 header {
-  background: #2c3e50;
-  color: white;
-  padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: #1e1e1e;
+  padding: 1rem 2rem;
+  border-bottom: 2px solid #333;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
 }
 
 button {
-  background: #3498db;
+  background: #4cafef;
   border: none;
-  color: white;
-  padding: 0.5rem 1rem;
-  margin: 0.25rem;
+  padding: 0.6rem 1.2rem;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: bold;
   cursor: pointer;
-  border-radius: 6px;
+  transition: 0.2s;
 }
 
 button:hover {
-  background: #2980b9;
+  background: #2196f3;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.2rem;
+  padding: 1.5rem;
 }
 
 .product-card {
-  background: white;
+  background: #1e1e1e;
   padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  text-align: center;
+  transition: 0.2s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
 }
 
 .detail {
-  background: white;
   padding: 1.5rem;
-  margin: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  background: #181818;
+  margin: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+#qrcode {
+  margin: 1rem auto;
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #1e1e1e;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.modal-content input, 
+.modal-content textarea {
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
 }
