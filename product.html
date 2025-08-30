@@ -1,72 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Details</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      margin: 0;
-      padding: 0;
+      background: #1e1e1e;
+      color: white;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center;
       min-height: 100vh;
+      margin: 0;
     }
     .container {
-      background: #fff;
       max-width: 600px;
-      margin: 2rem auto;
-      padding: 2rem;
+      background: #2b2b2b;
+      padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       text-align: center;
     }
-    h1 {
-      margin-bottom: 1rem;
-      font-size: 2rem;
-      color: #333;
-    }
-    p {
-      font-size: 1.1rem;
-      color: #555;
-      margin: 0.5rem 0;
-    }
-    .qr {
-      margin-top: 2rem;
+    h2 {
+      margin-top: 0;
+      color: #4da6ff;
     }
     #qrcode {
-      margin: 1rem auto;
+      margin-top: 20px;
     }
-    a.back-btn {
+    .back-btn {
       display: inline-block;
-      margin-top: 2rem;
-      padding: 0.75rem 1.5rem;
-      background: #007BFF;
+      margin-top: 20px;
+      padding: 10px 15px;
+      background: #4da6ff;
       color: white;
-      border-radius: 8px;
       text-decoration: none;
-      transition: background 0.2s ease-in-out;
+      border-radius: 6px;
+      transition: 0.2s;
     }
-    a.back-btn:hover {
-      background: #0056b3;
+    .back-btn:hover {
+      background: #1a75ff;
     }
   </style>
 </head>
 <body>
-  <div class="container" id="productDetails">
-    <!-- Product details will load here -->
+  <div class="container">
+    <div id="productDetails">
+      <!-- Product info will load here -->
+    </div>
+    <a href="index.html" class="back-btn">← Back to Stock List</a>
   </div>
 
-  <div style="text-align: center;">
-    <a href="index.html" class="back-btn">⬅ Back to Stock List</a>
-  </div>
-
-  <!-- QR code library + product logic -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
   <script src="product.js"></script>
 </body>
 </html>
