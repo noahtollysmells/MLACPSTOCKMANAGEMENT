@@ -1,56 +1,54 @@
-// === Google Sheet CSV URL ===
-const SHEET_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQRy4oNHqb6IGGRq87BVHs5GD69suWg9nX89R8W6rfMV8IfgZrZ8PImes-MX2_JkgYtcGJmH45M8V-M/pub?output=csv";
+// product.js
 
-// === Get product ID from URL query string ===
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQRy4oNHqb6IGGRq87BVHs5GD69suWg9nX89R8W6rfMV8IfgZrZ8PImes-MX2_JkgYtcGJmH45M8V-M/pub?output=csv";
+
+// Parse query string
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get("id");
 
-// === Fetch and parse CSV ===
-async function fetchCSV() {
-  const res = await fetch(SHEET_URL);
-  const text = await res.text();
-  // split into rows and columns
-  return text.split("\n").map((row) => row.split(","));
-}
+console.log("Looking for product with ID:", productId);
 
-// === Load and display product ===
-async function loadProduct() {
-  const data = await fetchCSV();
-  const headers = data[0].map((h) => h.trim().toLowerCase());
-  const rows = data.slice(1);
+fetch(SHEET_URL)
+  .then(res => res.text())
+  .then(csv => {
+    const rows = csv.split("\n").map(r => r.trim()).filter(r => r.length > 0);
+    const headers = rows[0].split(",").map(h => h.trim().toLowerCase());
 
-  const idIndex = headers.indexOf("id");
-  const nameIndex = headers.indexOf("name");
-  const specsIndex = headers.indexOf("specs");
-  const priceIndex = headers.indexOf("price");
+    console.log("Headers found:", headers);
 
-  const product = rows.find((row) => row[idIndex] === productId);
-  const container = document.getElementById("productDetails");
+    const data = rows.slice(1).map(r => {
+      const values = r.split(",");
+      let obj = {};
+      headers.forEach((h, i) => obj[h] = values[i] ? values[i].trim() : "");
+      return obj;
+    });
 
-  if (!product) {
-    container.innerHTML = `<p>❌ Product not found.</p>`;
-    return;
-  }
+    console.log("Parsed data:", data);
 
-  // === Build HTML for product ===
-  container.innerHTML = `
-    <h1>${product[nameIndex]}</h1>
-    <p><strong>Specs:</strong> ${product[specsIndex]}</p>
-    <p><strong>Price:</strong> £${product[priceIndex]}</p>
-    <div class="qr">
-      <div id="qrcode"></div>
-      <p>📱 Scan this QR to open this product</p>
-    </div>
-  `;
+    const product = data.find(p => p.id === productId);
 
-  // === Generate QR Code ===
-  new QRCode(document.getElementById("qrcode"), {
-    text: window.location.href,
-    width: 200,
-    height: 200,
+    if (!product) {
+      document.getElementById("productDetails").innerHTML =
+        `<p style="color: red;">❌ Product not found (id=${productId})</p>`;
+      return;
+    }
+
+    document.getElementById("productDetails").innerHTML = `
+      <h2>${product.name}</h2>
+      <p><strong>Specs:</strong> ${product.specs}</p>
+      <p><strong>Price:</strong> $${product.price}</p>
+      <canvas id="qrcode"></canvas>
+    `;
+
+    // Generate QR code
+    new QRious({
+      element: document.getElementById("qrcode"),
+      value: window.location.href,
+      size: 200
+    });
+  })
+  .catch(err => {
+    console.error("Error loading product data:", err);
+    document.getElementById("productDetails").innerHTML =
+      `<p style="color: red;">⚠️ Error loading product data</p>`;
   });
-}
-
-// === Run on page load ===
-loadProduct();
