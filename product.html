@@ -5,17 +5,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Product Details</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .product-card {
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .product-card h1 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .product-card p {
+      margin: 8px 0;
+      font-size: 1rem;
+    }
+
+    .product-card strong {
+      color: #444;
+    }
+
+    #qrcode {
+      margin: 20px auto;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 16px;
+      margin: 8px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: #007bff;
+      color: #fff;
+    }
+
+    .btn-danger {
+      background: #dc3545;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
+  <div class="product-card">
     <h1 id="productName">Loading...</h1>
     <p><strong>Specs:</strong> <span id="productSpecs"></span></p>
     <p><strong>Price:</strong> £<span id="productPrice"></span></p>
+
     <div id="qrcode"></div>
-    <br />
+
     <button id="deleteBtn" class="btn btn-danger">🗑 Delete Product</button>
-    <br /><br />
-    <a href="index.html" class="btn">⬅ Back to Stock List</a>
+    <a href="index.html" class="btn btn-primary">⬅ Back to Stock List</a>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
