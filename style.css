@@ -1,102 +1,53 @@
-/* General layout */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f7fa;
   margin: 0;
-  background: #f4f6f8;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 600px;
+  width: 90%;
+}
+
+.card {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
   color: #333;
 }
 
-header, footer {
-  background: #1a73e8;
-  color: #fff;
-  padding: 15px;
-  text-align: center;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 1.6rem;
-}
-
-footer p {
-  margin: 0;
-  font-size: 0.9rem;
-}
-
-main {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 20px;
-}
-
-/* Product card */
-.product-card {
-  background: #fff;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 600px;
-}
-
-.product-card h2 {
-  margin-top: 0;
-  color: #1a73e8;
-  font-size: 1.4rem;
-}
-
-.product-card p {
-  margin: 12px 0;
+p {
   font-size: 1rem;
+  margin: 0.5rem 0;
 }
 
-.qr-container {
+#qrcode {
   margin-top: 20px;
-  text-align: center;
 }
 
-.qr-container img {
-  margin-top: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-/* Buttons */
-.back-button, .delete-button {
+.back-btn {
   display: inline-block;
-  background: #1a73e8;
-  color: white;
-  text-decoration: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  transition: background 0.2s;
   margin-top: 20px;
-  text-align: center;
+  padding: 0.7rem 1.2rem;
+  background: #007BFF;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s ease;
 }
 
-.delete-button {
-  background: #e84545;
-  border: none;
-  cursor: pointer;
-}
-
-.back-button:hover {
-  background: #1558b0;
-}
-
-.delete-button:hover {
-  background: #c62828;
-}
-
-/* Loading and error */
-.loading {
-  text-align: center;
-  color: #888;
-}
-
-.error {
-  color: #e84545;
-  font-weight: bold;
-  text-align: center;
+.back-btn:hover {
+  background: #0056b3;
 }
