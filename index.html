@@ -13,19 +13,20 @@
 <body class="bg-dark text-light">
 
   <div class="container py-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h1 class="mb-0">📋 Stock List</h1>
-      <!-- Link to Google Form -->
-      <a href="YOUR_GOOGLE_FORM_LINK" target="_blank" class="btn btn-success">➕ Add Product</a>
+    <!-- Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+      <h1 class="mb-3 mb-md-0">📋 Stock List</h1>
+      <!-- Link to your add.html -->
+      <a href="add.html" class="btn btn-success">➕ Add Product</a>
     </div>
 
     <!-- Search bar -->
-    <div class="input-group mb-3">
+    <div class="input-group mb-4">
       <input type="text" id="searchBar" class="form-control" placeholder="Search by product name...">
       <button class="btn btn-primary" onclick="searchProducts()">Search</button>
     </div>
 
-    <!-- Products -->
+    <!-- Product list -->
     <div id="productList" class="row g-4"></div>
   </div>
 
