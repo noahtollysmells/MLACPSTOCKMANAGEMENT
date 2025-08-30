@@ -7,21 +7,21 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1 id="productName">Loading...</h1>
-    <div id="productDetails" class="card">
-      <p><strong>Specs:</strong> <span id="productSpecs"></span></p>
-      <p><strong>Price:</strong> £<span id="productPrice"></span></p>
-      <div class="qr-section">
-        <h3>QR Code</h3>
-        <canvas id="qrcode"></canvas>
-      </div>
-      <button id="deleteBtn" class="btn-danger">Delete Product</button>
-      <a href="index.html" class="btn">⬅ Back to List</a>
-    </div>
-  </div>
+  <header>
+    <h1>Product Details</h1>
+    <a href="index.html" class="back-button">← Back to Stock List</a>
+  </header>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <main>
+    <div id="product-details" class="product-card">
+      <p class="loading">Loading product details…</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>MLACP Stock Management</p>
+  </footer>
+
   <script src="product.js"></script>
 </body>
 </html>
