@@ -14,7 +14,7 @@ async function fetchProducts() {
       skipEmptyLines: true
     });
 
-    allProducts = parsed.data; // store full list
+    allProducts = parsed.data; // store all products
     renderProducts(allProducts);
   } catch (err) {
     console.error("Error loading product list:", err);
@@ -39,7 +39,7 @@ function renderProducts(products) {
 
     col.innerHTML = `
       <div class="card bg-secondary text-light p-3 h-100 shadow-sm">
-        <h5 class="card-title">${product.name}</h5>
+        <h5 class="card-title">${product.name || "Unnamed"}</h5>
         <p class="mb-1"><strong>Specs:</strong> ${product.specs || "N/A"}</p>
         <p class="mb-2"><strong>Price:</strong> £${product.price || "N/A"}</p>
         <a href="product.html?id=${product.id}" class="btn btn-outline-light">View</a>
@@ -50,7 +50,7 @@ function renderProducts(products) {
   });
 }
 
-// Search by button click
+// Search products
 function searchProducts() {
   const searchText = document.getElementById("searchBar").value.toLowerCase();
   const filtered = allProducts.filter(p =>
@@ -59,5 +59,12 @@ function searchProducts() {
   renderProducts(filtered);
 }
 
-// Start
+// Trigger search when pressing Enter
+document.getElementById("searchBar").addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    searchProducts();
+  }
+});
+
+// Load products on page load
 fetchProducts();
