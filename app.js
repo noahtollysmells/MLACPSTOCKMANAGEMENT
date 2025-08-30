@@ -1,8 +1,8 @@
 // ==========================
 // CONFIG: GitHub Pages Base URL
 // ==========================
-// Replace with your actual GitHub username + repo name
-const BASE_URL = "https://your-username.github.io/inventory-app";
+// Replace "inventory-app" with your repo name if you called it differently
+const BASE_URL = "https://noahtollysmells.github.io/inventory-app";
 
 // ==========================
 // PRODUCT STORAGE
@@ -84,7 +84,7 @@ function showDetail(id) {
 
   // Generate QR Code that points to GitHub Pages URL
   const url = `${BASE_URL}#/product/${id}`;
-  const qr = new QRCode(document.getElementById("qrcode"), {
+  new QRCode(document.getElementById("qrcode"), {
     text: url,
     width: 200,
     height: 200,
