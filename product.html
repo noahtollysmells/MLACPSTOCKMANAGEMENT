@@ -7,21 +7,17 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Product Details</h1>
-    <a href="index.html" class="back-button">← Back to Stock List</a>
-  </header>
-
-  <main>
-    <div id="product-details" class="product-card">
-      <p class="loading">Loading product details…</p>
+  <div class="container">
+    <div class="card">
+      <h1 id="product-name">Loading...</h1>
+      <p><strong>ID:</strong> <span id="product-id"></span></p>
+      <p><strong>Specs:</strong> <span id="product-specs"></span></p>
+      <p><strong>Price:</strong> £<span id="product-price"></span></p>
+      <div id="qrcode"></div>
+      <a href="index.html" class="back-btn">⬅ Back to Stock List</a>
     </div>
-  </main>
-
-  <footer>
-    <p>MLACP Stock Management</p>
-  </footer>
-
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="product.js"></script>
 </body>
 </html>
