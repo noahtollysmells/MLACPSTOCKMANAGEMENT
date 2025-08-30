@@ -1,7 +1,3 @@
-// ==========================
-// CONFIG: GitHub Pages Base URL
-// ==========================
-// Your real deployed repo URL
 const BASE_URL = "https://noahtollysmells.github.io/MLACPSTOCKMANAGEMENT";
 
 // ==========================
@@ -10,7 +6,6 @@ const BASE_URL = "https://noahtollysmells.github.io/MLACPSTOCKMANAGEMENT";
 function loadProducts() {
   return JSON.parse(localStorage.getItem("products") || "[]");
 }
-
 function saveProducts(products) {
   localStorage.setItem("products", JSON.stringify(products));
 }
@@ -28,7 +23,7 @@ function renderList() {
     card.className = "product-card";
     card.innerHTML = `
       <h3>${p.name}</h3>
-      <p><strong>Price:</strong> £${p.price}</p>
+      <p><strong>£${p.price}</strong></p>
       <button onclick="showDetail('${p.id}')">View</button>
       <button onclick="deleteProduct('${p.id}')">Delete</button>
     `;
@@ -39,19 +34,30 @@ function renderList() {
 // ==========================
 // ADD PRODUCT
 // ==========================
+function openModal() {
+  document.getElementById("modal").classList.remove("hidden");
+}
+function closeModal() {
+  document.getElementById("modal").classList.add("hidden");
+}
 function addProduct() {
-  const name = prompt("Product name?");
-  if (!name) return;
+  const name = document.getElementById("prodName").value;
+  const specs = document.getElementById("prodSpecs").value;
+  const price = document.getElementById("prodPrice").value;
+  if (!name || !price) return alert("Name and Price required");
 
-  const specs = prompt("Specs?");
-  const price = prompt("Price?");
   const id = Date.now().toString();
-
   const products = loadProducts();
   products.push({ id, name, specs, price });
   saveProducts(products);
 
+  closeModal();
   renderList();
+
+  // reset form
+  document.getElementById("prodName").value = "";
+  document.getElementById("prodSpecs").value = "";
+  document.getElementById("prodPrice").value = "";
 }
 
 // ==========================
@@ -75,20 +81,22 @@ function showDetail(id) {
   const detail = document.getElementById("productDetail");
   detail.innerHTML = `
     <h2>${product.name}</h2>
-    <p><strong>Specs:</strong> ${product.specs}</p>
+    <p><strong>Specs:</strong> ${product.specs || "N/A"}</p>
     <p><strong>Price:</strong> £${product.price}</p>
     <div id="qrcode"></div>
-    <button onclick="downloadQR('${id}')">Download QR</button>
-    <button onclick="window.print()">Print Label</button>
-    <button onclick="backToList()">Back to List</button>
+    <div style="margin-top:1rem;">
+      <button onclick="downloadQR('${id}')">⬇️ Download QR</button>
+      <button onclick="window.print()">🖨️ Print Label</button>
+      <button onclick="backToList()">⬅️ Back</button>
+    </div>
   `;
 
-  // Generate QR Code pointing to GitHub Pages product link
+  // Generate QR
   const url = `${BASE_URL}#/product/${id}`;
   new QRCode(document.getElementById("qrcode"), {
     text: url,
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
   });
 
   window.location.hash = "/product/" + id;
@@ -100,7 +108,6 @@ function showDetail(id) {
 function downloadQR(id) {
   const canvas = document.querySelector("#qrcode canvas");
   if (!canvas) return;
-
   const link = document.createElement("a");
   link.download = `product_${id}_qr.png`;
   link.href = canvas.toDataURL();
@@ -117,12 +124,15 @@ function backToList() {
 }
 
 // ==========================
-// ROUTER
+// ROUTER INIT
 // ==========================
 window.addEventListener("load", () => {
   renderList();
 
-  // If URL has a product hash, open detail
+  document.getElementById("addBtn").addEventListener("click", openModal);
+  document.getElementById("cancelBtn").addEventListener("click", closeModal);
+  document.getElementById("saveBtn").addEventListener("click", addProduct);
+
   const hash = window.location.hash;
   if (hash.startsWith("#/product/")) {
     const id = hash.split("/")[2];
