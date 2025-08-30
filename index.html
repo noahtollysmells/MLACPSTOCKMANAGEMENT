@@ -2,26 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MLACP Stock Manager</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PC & Laptop Stock</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
   <header>
-    <h1>📦 MLACP Stock Manager</h1>
-    <button id="addBtn">➕ Add Product</button>
+    <h1>💻 PC & Laptop Stock Manager</h1>
   </header>
 
   <main>
-    <div id="productList" class="grid"></div>
-    <div id="productDetail" class="detail hidden"></div>
+    <section id="productList" class="grid"></section>
+
+    <section id="productDetail" class="hidden"></section>
   </main>
 
   <footer>
-    <p>MLACP Stock Management • Powered by Firebase</p>
+    <p>Powered by Google Sheets 📊</p>
   </footer>
 
   <script src="app.js"></script>
