@@ -2,7 +2,7 @@
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQRy4oNHqb6IGGRq87BVHs5GD69suWg9nX89R8W6rfMV8IfgZrZ8PImes-MX2_JkgYtcGJmH45M8V-M/pub?output=csv";
 
 // If you already have an ADD Apps Script deployment URL, put it here:
-const ADD_URL = ""; // e.g. "https://script.google.com/macros/s/AKfycbyz.../exec"
+const ADD_URL = "https://script.google.com/macros/s/AKfycbzDnS9qVfqb7dyeOGdBP24GzYWchd82F3XnuLKddts_ezLCMdV-jINXCk75gtmaesot/exec"; // e.g. "https://script.google.com/macros/s/AKfycbyz.../exec"
 
 // ====== CSV HELPERS ======
 function parseCSV(text) {
