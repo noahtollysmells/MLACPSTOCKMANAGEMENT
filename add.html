@@ -5,6 +5,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Add Product</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-card {
+      max-width: 500px;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .form-card label {
+      display: flex;
+      flex-direction: column;
+      font-weight: bold;
+    }
+    .form-card input, 
+    .form-card textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    .form-card button {
+      padding: 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+    .form-card button:hover {
+      background: #0056b3;
+    }
+    #msg {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    footer {
+      text-align: center;
+      margin-top: 30px;
+    }
+    footer a {
+      text-decoration: none;
+      color: #007bff;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -16,7 +77,7 @@
       <label>ID <input type="text" name="id" required /></label>
       <label>Name <input type="text" name="name" required /></label>
       <label>Specs <textarea name="specs" required></textarea></label>
-      <label>Price <input type="number" name="price" required /></label>
+      <label>Price (£) <input type="number" name="price" required /></label>
       <button type="submit">Add Product</button>
     </form>
     <p id="msg"></p>
@@ -32,19 +93,22 @@
       const form = new FormData(e.target);
       const data = Object.fromEntries(form.entries());
 
-      // 👇 Replace with your Apps Script Web App URL
-      const SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEBAPP_URL";
+      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzDnS9qVfqb7dyeOGdBP24GzYWchd82F3XnuLKddts_ezLCMdV-jINXCk75gtmaesot/exec";
 
-      const res = await fetch(SCRIPT_URL, {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: "POST",
+          body: JSON.stringify(data),
+        });
 
-      if (res.ok) {
-        document.getElementById("msg").textContent = "✅ Product added!";
-        e.target.reset();
-      } else {
-        document.getElementById("msg").textContent = "❌ Error adding product.";
+        if (res.ok) {
+          document.getElementById("msg").textContent = "✅ Product added!";
+          e.target.reset();
+        } else {
+          document.getElementById("msg").textContent = "❌ Error adding product.";
+        }
+      } catch (err) {
+        document.getElementById("msg").textContent = "⚠️ Network error.";
       }
     });
   </script>
