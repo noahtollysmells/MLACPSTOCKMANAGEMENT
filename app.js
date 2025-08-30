@@ -26,27 +26,34 @@ async function renderList() {
     card.innerHTML = `
       <h3>${p.name}</h3>
       <p><strong>£${p.price}</strong></p>
-      <button onclick="showDetail('${p.id}')">View</button>
+      <button onclick="window.location.hash='/product/${p.id}'">View</button>
     `;
     list.appendChild(card);
   });
 }
 
-async function showDetail(id) {
+async function renderProductPage(id) {
   const products = await fetchProducts();
   const product = products.find(p => p.id === id);
-  if (!product) return;
 
+  const list = document.getElementById("productList");
   const detail = document.getElementById("productDetail");
-  detail.classList.remove("hidden");
 
+  list.innerHTML = "";
+  if (!product) {
+    detail.innerHTML = "<p>Product not found.</p>";
+    detail.classList.remove("hidden");
+    return;
+  }
+
+  detail.classList.remove("hidden");
   detail.innerHTML = `
     <h2>${product.name}</h2>
     <p><strong>Specs:</strong> ${product.specs}</p>
     <p><strong>Price:</strong> £${product.price}</p>
     <div id="qrcode"></div>
     <button onclick="downloadQR('${id}')">Download QR</button>
-    <button onclick="backToList()">Back</button>
+    <button onclick="window.location.hash=''">Back to List</button>
   `;
 
   const url = `${window.location.origin}${window.location.pathname}#/product/${id}`;
@@ -55,8 +62,6 @@ async function showDetail(id) {
     width: 200,
     height: 200,
   });
-
-  window.location.hash = "/product/" + id;
 }
 
 function downloadQR(id) {
@@ -68,16 +73,16 @@ function downloadQR(id) {
   link.click();
 }
 
-function backToList() {
-  window.location.hash = "";
-  document.getElementById("productDetail").classList.add("hidden");
-}
-
-window.addEventListener("load", async () => {
-  renderList();
+// Handle routing
+async function handleRouting() {
   const hash = window.location.hash;
   if (hash.startsWith("#/product/")) {
     const id = hash.split("/")[2];
-    showDetail(id);
+    renderProductPage(id);
+  } else {
+    renderList();
   }
-});
+}
+
+window.addEventListener("load", handleRouting);
+window.addEventListener("hashchange", handleRouting);
