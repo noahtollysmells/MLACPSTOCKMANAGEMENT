@@ -1,5 +1,5 @@
 // ==========================
-// Firebase Config
+// FIREBASE INIT
 // ==========================
 const firebaseConfig = {
   apiKey: "AIzaSyDlZMxDROLU7zZ0q1CVGEo1G0oEVgPoaxI",
@@ -11,71 +11,50 @@ const firebaseConfig = {
   measurementId: "G-P7KFVSBDXC"
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// Your GitHub Pages base URL
-const BASE_URL = "https://noahtollysmells.github.io/MLACPSTOCKMANAGEMENT";
+// ==========================
+// FETCH PRODUCTS
+// ==========================
+async function fetchProducts() {
+  const snapshot = await db.collection("products").get();
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}
 
 // ==========================
 // RENDER LIST
 // ==========================
 async function renderList() {
   const list = document.getElementById("productList");
+  const detail = document.getElementById("productDetail");
   list.innerHTML = "";
+  detail.classList.add("hidden");
 
-  const snapshot = await db.collection("products").get();
-  snapshot.forEach((doc) => {
-    const p = doc.data();
+  const products = await fetchProducts();
+
+  products.forEach((p) => {
     const card = document.createElement("div");
     card.className = "product-card";
     card.innerHTML = `
       <h3>${p.name}</h3>
-      <p><strong>Price:</strong> £${p.price}</p>
-      <button onclick="showDetail('${doc.id}')">View</button>
-      <button onclick="deleteProduct('${doc.id}')">Delete</button>
+      <p><strong>£${p.price}</strong></p>
+      <button onclick="showDetail('${p.id}')">View</button>
     `;
     list.appendChild(card);
   });
 }
 
 // ==========================
-// ADD PRODUCT
-// ==========================
-async function addProduct() {
-  const name = prompt("Product name?");
-  if (!name) return;
-
-  const specs = prompt("Specs?");
-  const price = prompt("Price?");
-
-  await db.collection("products").add({
-    name,
-    specs,
-    price
-  });
-
-  renderList();
-}
-
-// ==========================
-// DELETE PRODUCT
-// ==========================
-async function deleteProduct(id) {
-  await db.collection("products").doc(id).delete();
-  renderList();
-}
-
-// ==========================
 // SHOW PRODUCT DETAIL
 // ==========================
 async function showDetail(id) {
-  const doc = await db.collection("products").doc(id).get();
-  if (!doc.exists) return;
+  const products = await fetchProducts();
+  const product = products.find(p => p.id === id);
+  if (!product) return;
 
-  const product = doc.data();
   const detail = document.getElementById("productDetail");
+  detail.classList.remove("hidden");
 
   detail.innerHTML = `
     <h2>${product.name}</h2>
@@ -84,11 +63,11 @@ async function showDetail(id) {
     <div id="qrcode"></div>
     <button onclick="downloadQR('${id}')">Download QR</button>
     <button onclick="window.print()">Print Label</button>
-    <button onclick="backToList()">Back to List</button>
+    <button onclick="deleteProduct('${id}')">Delete</button>
+    <button onclick="backToList()">Back</button>
   `;
 
-  // Generate QR code pointing to GitHub Pages product link
-  const url = `${BASE_URL}#/product/${id}`;
+  const url = `${window.location.origin}${window.location.pathname}#/product/${id}`;
   new QRCode(document.getElementById("qrcode"), {
     text: url,
     width: 200,
@@ -96,6 +75,31 @@ async function showDetail(id) {
   });
 
   window.location.hash = "/product/" + id;
+}
+
+// ==========================
+// ADD PRODUCT
+// ==========================
+async function addProduct() {
+  const name = prompt("Enter product name:");
+  const specs = prompt("Enter product specs:");
+  const price = prompt("Enter product price:");
+
+  if (!name || !specs || !price) return;
+
+  await db.collection("products").add({ name, specs, price });
+  renderList();
+}
+
+// ==========================
+// DELETE PRODUCT
+// ==========================
+async function deleteProduct(id) {
+  if (confirm("Delete this product?")) {
+    await db.collection("products").doc(id).delete();
+    backToList();
+    renderList();
+  }
 }
 
 // ==========================
@@ -116,8 +120,7 @@ function downloadQR(id) {
 // ==========================
 function backToList() {
   window.location.hash = "";
-  document.getElementById("productDetail").innerHTML = "";
-  renderList();
+  document.getElementById("productDetail").classList.add("hidden");
 }
 
 // ==========================
@@ -125,6 +128,8 @@ function backToList() {
 // ==========================
 window.addEventListener("load", async () => {
   renderList();
+
+  document.getElementById("addBtn").addEventListener("click", addProduct);
 
   // If URL has a product hash, open detail
   const hash = window.location.hash;
