@@ -8,59 +8,65 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f6f9;
+      background: #f4f7fb;
       margin: 0;
-      padding: 20px;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
     }
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .product-card {
-      max-width: 600px;
-      margin: auto;
+    .container {
       background: #fff;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 2rem;
       border-radius: 12px;
-      padding: 25px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
       text-align: center;
     }
-    .product-card h1 {
-      color: #007bff;
-      margin-bottom: 15px;
+    h1 {
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      color: #333;
     }
-    .product-card p {
-      margin: 8px 0;
-      color: #444;
+    p {
+      font-size: 1.1rem;
+      color: #555;
+      margin: 0.5rem 0;
     }
     .qr {
-      margin-top: 20px;
+      margin-top: 2rem;
     }
-    footer {
-      text-align: center;
-      margin-top: 30px;
+    #qrcode {
+      margin: 1rem auto;
     }
-    footer a {
+    a.back-btn {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      background: #007BFF;
+      color: white;
+      border-radius: 8px;
       text-decoration: none;
-      color: #007bff;
+      transition: background 0.2s ease-in-out;
+    }
+    a.back-btn:hover {
+      background: #0056b3;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🔎 Product Details</h1>
-  </header>
+  <div class="container" id="productDetails">
+    <!-- Product details will load here -->
+  </div>
 
-  <main>
-    <div class="product-card" id="productDetails">
-      <!-- Product details + QR will load here -->
-    </div>
-  </main>
+  <div style="text-align: center;">
+    <a href="index.html" class="back-btn">⬅ Back to Stock List</a>
+  </div>
 
-  <footer>
-    <a href="index.html">⬅ Back to Stock List</a>
-  </footer>
-
+  <!-- QR code library + product logic -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="product.js"></script>
 </body>
 </html>
