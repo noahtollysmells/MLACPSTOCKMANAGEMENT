@@ -2,163 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MLACP Stock Management</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f4f6f9;
-      color: #333;
-    }
-
-    header {
-      background: #0d6efd;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 1.8rem;
-    }
-
-    main {
-      padding: 1rem;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .actions {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 1rem;
-    }
-
-    .actions button {
-      background: #198754;
-      border: none;
-      padding: 0.6rem 1rem;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background 0.2s;
-    }
-
-    .actions button:hover {
-      background: #157347;
-    }
-
-    #productList {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem;
-    }
-
-    .product-card {
-      background: white;
-      padding: 1rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .product-card h3 {
-      margin: 0 0 0.5rem;
-    }
-
-    .product-card button {
-      margin: 0.25rem;
-      padding: 0.4rem 0.8rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.9rem;
-    }
-
-    .product-card button:first-of-type {
-      background: #0d6efd;
-      color: white;
-    }
-    .product-card button:first-of-type:hover {
-      background: #0b5ed7;
-    }
-
-    .product-card button:last-of-type {
-      background: #dc3545;
-      color: white;
-    }
-    .product-card button:last-of-type:hover {
-      background: #bb2d3b;
-    }
-
-    #productDetail {
-      background: white;
-      margin-top: 1rem;
-      padding: 1rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    #productDetail h2 {
-      margin-top: 0;
-    }
-
-    #productDetail button {
-      margin: 0.5rem;
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    #productDetail button:nth-child(4) {
-      background: #0d6efd;
-      color: white;
-    }
-
-    #productDetail button:nth-child(5) {
-      background: #198754;
-      color: white;
-    }
-
-    #productDetail button:nth-child(6) {
-      background: #6c757d;
-      color: white;
-    }
-
-    @media print {
-      header, .actions, #productList, #productDetail button { display: none; }
-      #productDetail { box-shadow: none; margin: 0; }
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MLACP Stock Manager</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 </head>
 <body>
   <header>
-    <h1>MLACP Stock Management</h1>
+    <h1>📦 MLACP Stock Manager</h1>
+    <button id="addBtn">➕ Add Product</button>
   </header>
 
   <main>
-    <div class="actions">
-      <button onclick="addProduct()">➕ Add Product</button>
-    </div>
-
-    <div id="productList"></div>
-    <div id="productDetail"></div>
+    <div id="productList" class="grid"></div>
+    <div id="productDetail" class="detail hidden"></div>
   </main>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <footer>
+    <p>MLACP Stock Management • Powered by Firebase</p>
+  </footer>
 
-  <!-- QRCode.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-  <!-- App -->
   <script src="app.js"></script>
 </body>
 </html>
