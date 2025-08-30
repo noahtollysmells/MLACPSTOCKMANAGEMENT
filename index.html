@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- mobile fix -->
   <title>Stock List</title>
   <link rel="stylesheet" href="style.css">
   <!-- Bootstrap -->
@@ -13,6 +14,13 @@
 
   <div class="container py-5">
     <h1 class="text-center mb-4">📋 Stock List</h1>
+
+    <!-- Search bar -->
+    <div class="mb-4">
+      <input type="text" id="searchInput" class="form-control" placeholder="🔍 Search by machine name...">
+    </div>
+
+    <!-- Product list -->
     <div id="productList" class="row g-4"></div>
   </div>
 
