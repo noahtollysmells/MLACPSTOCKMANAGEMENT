@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Details</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>📦 Product Details</h1>
-  </header>
-
-  <main>
-    <div id="product-details" class="product-container">
-      <p class="loading">Loading product...</p>
+  <div class="container">
+    <h1 id="productName">Loading...</h1>
+    <div id="productDetails" class="card">
+      <p><strong>Specs:</strong> <span id="productSpecs"></span></p>
+      <p><strong>Price:</strong> £<span id="productPrice"></span></p>
+      <div class="qr-section">
+        <h3>QR Code</h3>
+        <canvas id="qrcode"></canvas>
+      </div>
+      <button id="deleteBtn" class="btn-danger">Delete Product</button>
+      <a href="index.html" class="btn">⬅ Back to List</a>
     </div>
-  </main>
+  </div>
 
-  <footer>
-    <a href="index.html" class="back-btn">⬅ Back to Stock List</a>
-  </footer>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
   <script src="product.js"></script>
 </body>
 </html>
