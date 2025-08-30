@@ -50,14 +50,14 @@ function renderProducts(products) {
   });
 }
 
-// Search function
-document.getElementById("searchBar").addEventListener("input", function (e) {
-  const searchText = e.target.value.toLowerCase();
+// Search by button click
+function searchProducts() {
+  const searchText = document.getElementById("searchBar").value.toLowerCase();
   const filtered = allProducts.filter(p =>
     p.name && p.name.toLowerCase().includes(searchText)
   );
   renderProducts(filtered);
-});
+}
 
 // Start
 fetchProducts();
